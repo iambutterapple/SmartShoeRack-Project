@@ -1,0 +1,32 @@
+#include <AFMotor.h> //add Adafruit Motor Shield library #include <Servo.h> //add Servo Motor library
+#include <NewPing.h> //add Ultrasonic sensor library
+
+#define TRIG_PIN A4 // Pin A4 on the Motor Drive Shield soldered to the ultrasonic sensor #define ECHO_PIN A5 // Pin A5 on the Motor Drive Shield soldered to the ultrasonic sensor #define MAX_DISTANCE 300 // sets maximum useable sensor measuring distance to 300cm
+
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE); // sets up sensor library to use the correct pins to measure distance.
+
+Servo servo1; // create servo object to control a servo Servo servo2; // create servo object to control a servo
+
+int curDist = 0; // curDist 는 감지거리
+
+void setup() { servo1.attach(9); // attaches the servo on pin 10 (SERVO_1 on the Motor Drive Shield to the servo object servo1.write(0); // tells the servo to position at 90-degrees ie. facing forward. servo2.attach(10); // attaches the servo on pin 10 (SERVO_2 on the Motor Drive Shield to the servo object servo2.write(0); // tells the servo to position at 90-degrees ie. facing forward. delay(1000); // delay for one seconds Serial.begin(9600); }
+
+void loop() { if(curDist <50 ) { // 50cm 안으로 들어오면 문 열림
+
+servo1.write(180);
+servo2.write(180);
+delay(500);
+} else{ servo1.write(0); servo2.write(0); delay(500);
+
+}
+
+curDist = readPing(); // read distance
+
+delay(500);
+
+Serial.println(curDist); delay(500); }
+
+int readPing() { // read the ultrasonic sensor distance delay(70);
+unsigned int uS = sonar.ping(); int cm = uS/US_ROUNDTRIP_CM; return cm;
+
+}
