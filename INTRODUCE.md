@@ -1,7 +1,4 @@
-
-
-
-                                                  [ SMARTSHOERACK_PROJECT] 
+#[ SMARTSHOERACK_PROJECT] 
 
 
                                                   
